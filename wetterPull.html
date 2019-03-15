@@ -1,0 +1,67 @@
+<meta charset="utf-8">
+
+<h1>Wetter in Dieburg</h1>
+<p id="Wetter"></p>
+<p id="Temperatur"></p>
+<p id="Luftfeuchtigkeit"></p>
+<p id="Bewölkung"></p>
+
+<script>
+    /* AJAJ */
+    
+    // request-Objekt
+    var request = new XMLHttpRequest();
+    
+    // Definieren des requests
+    request.open("GET", "http://api.openweathermap.org/data/2.5/weather?q=Dieburg&units=metric&lang=de&APPID=833e39c3de6d026e45e3505f668c7f67");
+    
+    var json;
+    
+    // Variable zum Speichern des JSON-Objekts
+    request.onload = function(){ 
+        json = JSON.parse(request.responseText);
+        
+        /*
+        console.log(typeof json);
+        console.log(json);
+        console.log(typeof request.response);
+        console.log("request.response: " +request.response);
+        console.log(typeof request.responseText);
+        console.log("responseText: " + request.responseText);
+        console.log(typeof request);
+        console.log("request: " + request);
+        console.log(json.main.temp);
+        */
+        
+        console.log(json.weather[0].description);
+        
+        // Beschreibung
+        var str = "Wetter zurzeit: " + json.weather[0].description;
+        var wetter = document.getElementById("Wetter");
+        wetter.innerHTML = str;
+        
+        // Temperatur
+        var temperatur= document.getElementById("Temperatur");
+        str = "Temperatur: " + json.main.temp + "°C";
+        temperatur.innerHTML = str;
+        
+        // Luftfeuchtigkeit
+        var humidity = document.getElementById("Luftfeuchtigkeit");
+        str= "Luftfeuchtigkeit: " + json.main.humidity + "%";
+        humidity.innerHTML = str;
+        
+        // Bewölkung
+        var bewoelkung = document.getElementById("Bewölkung");
+        str= "Bewölkungsgrad: " + json.clouds.all +"%";
+        bewoelkung.innerHTML=str;
+        
+        
+        
+    }
+    
+    request.send();
+    
+    
+    
+    
+</script>
